@@ -1,0 +1,22 @@
+sudo: required 
+services:
+    - docker
+
+before_install:
+    - docker build -t buckzm/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+    - docker run buckzm/react-test npm test -- --coverage 
+
+after_success:
+    - docker build -t buckzm/multi-client ./client
+    - docker build -t buckzm/multi-nginx ./nginx
+    - docker build -t buckzm/multi-server ./server
+    - docker build -t buckzm/multi-worker ./worker
+    # Login 
+    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    # Push img to the hub 
+    - docker push buckzm/multi-client
+    - docker push buckzm/multi-nginx
+    - docker push buckzm/multi-server
+    - docker push buckzm/multi-worker
