@@ -15,7 +15,7 @@ after_success:
     - docker build -t buckzm/multi-server ./server
     - docker build -t buckzm/multi-worker ./worker
     # Login 
-    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
     # Push img to the hub 
     - docker push buckzm/multi-client
     - docker push buckzm/multi-nginx
