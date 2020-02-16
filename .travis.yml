@@ -17,6 +17,7 @@ after_success:
     # Login 
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
     # Push img to the hub 
+    # Hello showing chris 
     - docker push buckzm/multi-client
     - docker push buckzm/multi-nginx
     - docker push buckzm/multi-server
